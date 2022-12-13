@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+{% load static %}
+{% load django_bootstrap5 %}
+<html lang="en">
+<head>
+    {% bootstrap_css %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'favicon-gold.ico' %}">
+    <style>
+        ul {
+            list-style: none;
+        }
+
+        .ul-flex {
+            display: grid;
+            grid-template-columns: 30px 90px 75px 75px 300px 125px 175px;
+        }
+
+        .metal_type {
+            width: 100px;
+            text-align: right;
+            margin-right: 10px
+        }
+
+        .buy {
+            width: 100px;
+            text-align: right;
+        }
+
+        .sell {
+            width: 100px;
+            text-align: right;
+        }
+
+        .label {
+            text-align: center;
+        }
+
+    </style>
+    <title>Django証券の取引記録</title>
+</head>
+<body>
+<h1>Django証券の取引記録ページです</h1>
+<section class="section">
+    本来は、管理者しか見れないページですが、今回は、誰でも見れるようにしています。<br>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th class="label">id</th>
+            <th scope="col">銘柄</th>
+            <th scope="col">単価</th>
+            <th scope="col">数量</th>
+            <th scope="col">email</th>
+            <th scope="col">name</th>
+            <th scope="col">created</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for purchase in purchase_list %}
+            <tr>
+                <td>{{ purchase.id }}</td>
+                <td>{{ purchase.stock.name }}</td>
+                <td>{{ purchase.stock.buy }}</td>
+                <td>{{ purchase.weight }}</td>
+                <td>{{ purchase.email }}</td>
+                <td>{{ purchase.name }}</td>
+                <td>{{ purchase.created|date:'Y/m/d H:i' }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <p>
+        <a href="{% url 'stock:buy' %}">証券を売る</a><br>
+        <a href="#">証券を買う(販売は休止しています)</a><br>
+        <a href="{% url 'main:index' %}">トップに戻る</a><br>
+    </p>
+
+</section>
+
+</body>
+</html>
